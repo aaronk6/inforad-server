@@ -4,18 +4,21 @@ require 'open-uri'
 require 'nokogiri'
 require 'json'
 require 'yaml'
+require 'active_support/time'
 
 class DBScraper
 
   SOURCE_URL = "http://mobile.bahn.de/bin/mobil/bhftafel.exe/dox"
   SOURCE_CHARSET = "ISO-8859-1"
-  SOURCE_TIMEZONE = Time.new.dst? ? "CEST" : "CET"
+  SOURCE_TIMEZONE = "CET"
 
   def initialize
     @config = YAML.load_file('config/db_scraper.yml')
   end
 
   def getSchedule
+    Time.zone = SOURCE_TIMEZONE
+
     doc = getDoc
     items = doc.css('#content .clicktable .trow');
     now = Time.now
@@ -26,7 +29,7 @@ class DBScraper
     items.each do |item|
 
       train = item.css("> a > span").text().squeeze(" ").strip
-      departure = Time.parse("%s %s" % [ item.css("> span.bold").text(), SOURCE_TIMEZONE ])
+      departure = Time.zone.parse(item.css("> span.bold").text())
       destination = /\>\>\n([^,\(]*)?/m.match(item.text())[1].strip
       normal_delay = item.css("> span.okmsg").text().sub!(/^\+/, "").to_i
       heavy_delay = item.css("> span.red").text().sub!(/^\+/, "").to_i
