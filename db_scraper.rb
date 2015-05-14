@@ -13,7 +13,7 @@ class DBScraper
   SOURCE_TIMEZONE = "CET"
 
   def initialize
-    @config = YAML.load_file('config/db_scraper.yml')
+    @config = YAML.load_file('config.yml')["db_scraper"]
   end
 
   def getSchedule

@@ -1,0 +1,10 @@
+db_scraper:
+  station: 1
+  max_results: 10
+  remove_train_prefix: "STR "
+
+weather:
+  api_key: YOUR_WEATHER_UNDERGROUND_API_KEY
+  station_id: zmw:00000.10.10389
+  lang: EN
+  cache_duration: 300
