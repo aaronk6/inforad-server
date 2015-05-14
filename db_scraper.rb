@@ -9,6 +9,7 @@ class DBScraper
 
   SOURCE_URL = "http://mobile.bahn.de/bin/mobil/bhftafel.exe/dox"
   SOURCE_CHARSET = "ISO-8859-1"
+  SOURCE_TIMEZONE = Time.new.dst? ? "CEST" : "CET"
 
   def initialize
     @config = YAML.load_file('config/db_scraper.yml')
@@ -25,7 +26,7 @@ class DBScraper
     items.each do |item|
 
       train = item.css("> a > span").text().squeeze(" ").strip
-      departure = Time.parse(item.css("> span.bold").text())
+      departure = Time.parse("%s %s" % [ item.css("> span.bold").text(), SOURCE_TIMEZONE ])
       destination = /\>\>\n([^,\(]*)?/m.match(item.text())[1].strip
       normal_delay = item.css("> span.okmsg").text().sub!(/^\+/, "").to_i
       heavy_delay = item.css("> span.red").text().sub!(/^\+/, "").to_i
