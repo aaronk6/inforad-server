@@ -8,3 +8,6 @@ weather:
   station_id: zmw:00000.10.10389
   lang: EN
   cache_duration: 300
+
+rain_forecast:
+  federal_state: BER
