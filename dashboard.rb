@@ -10,7 +10,8 @@ class Dashboard
       tram_schedule: DBScraper.new.getSchedule,
       bitcoin_price: BitcoinPrice.new.getBitcoinPrice,
       weather: Weather.new.getWeather,
-      rain_forecast: RainForecast.new.getRainForecast
+      rain_forecast: RainForecast.new.getRainForecast,
+      currently_playing: ApplicationState[:currently_playing]
     }
   end
 

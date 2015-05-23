@@ -2,7 +2,9 @@ require 'sinatra'
 require 'sinatra/cross_origin'
 require 'json'
 
-require './dashboard'
+require_relative 'dashboard'
+
+ApplicationState = {}
 
 set :bind, '0.0.0.0'
 
@@ -20,6 +22,17 @@ get '/dashboard' do
   cross_origin
   content_type :json
   Dashboard.new.getDashboard.to_json
+end
+
+post '/currently_playing' do
+  info = request.body.read.force_encoding('UTF-8')
+
+  ApplicationState[:currently_playing] = {
+    info: info.empty? ? nil : info,
+    last_update: Time.now.iso8601
+  }
+  status 204
+  ''
 end
 
 options "*" do
