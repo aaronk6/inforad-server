@@ -23,7 +23,6 @@ class DBScraper
       doc = getDoc
     rescue Exception => e
       return {
-        schedule: nil,
         error: e.message,
         last_update: Time.now.iso8601
       }

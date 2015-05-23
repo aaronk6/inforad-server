@@ -18,8 +18,15 @@ class Weather
   end
 
   def getWeather
-    res = queryAPI('/conditions/lang:%s/q/%s' % [
-      @config["lang"], URI::encode(@config["station_id"])])
+    begin
+      res = queryAPI('/conditions/lang:%s/q/%s' % [
+        @config["lang"], URI::encode(@config["station_id"])])
+    rescue Exception => e
+      return {
+        error: e.message,
+        last_update: Time.now.iso8601
+      }
+    end
 
     data = JSON.load(res[:data])["current_observation"]
     {
