@@ -8,7 +8,8 @@ require 'active_support/time'
 
 class DBScraper
 
-  SOURCE_URL = "http://mobile.bahn.de/bin/mobil/bhftafel.exe/dox"
+  #SOURCE_URL = "http://mobile.bahn.de/bin/mobil/bhftafel.exe/dox"
+  SOURCE_URL = "http://example.com/bin/mobil/bhftafel.exe/dox"
   SOURCE_CHARSET = "ISO-8859-1"
   SOURCE_TIMEZONE = "CET"
 
@@ -19,7 +20,16 @@ class DBScraper
   def getSchedule
     Time.zone = SOURCE_TIMEZONE
 
-    doc = getDoc
+    begin
+      doc = getDoc
+    rescue Exception => e
+      return {
+        schedule: nil,
+        error: e.message,
+        last_update: Time.now.iso8601
+      }
+    end
+
     items = doc.css('#content .clicktable .trow');
     now = Time.now
 

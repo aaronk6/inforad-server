@@ -12,7 +12,8 @@ class RainForecast
       ireq: "true",
       pid: "p_radar_map",
       src: "radar/vermarktung/p_radar_map_forecast/forecastLoop/%s/latestForecastLoop.gif" % [
-        @config["federal_state"] ]
+        @config["federal_state"] ],
+      "_": Time.new.to_i
     })
     {
       federal_state: @config["federal_state"],
