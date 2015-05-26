@@ -1,8 +1,8 @@
-require_relative 'pull_widget'
+require_relative '../classes/pull_widget'
 
 class BitcoinPrice < PullWidget
 
-  def initialize(app_config)
+  def initialize(*args)
     super
     @endpoint = 'https://api.coindesk.com/v1/bpi/currentprice/eur.json'
   end

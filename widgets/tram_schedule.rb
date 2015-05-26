@@ -1,4 +1,4 @@
-require_relative 'pull_widget'
+require_relative '../classes/pull_widget'
 
 require 'uri'
 require 'open-uri'
@@ -7,7 +7,7 @@ require 'active_support/time'
 
 class TramSchedule < PullWidget
 
-  def initialize (app_config)
+  def initialize (*args)
     super
 
     @update_interval = 30
@@ -65,7 +65,7 @@ class TramSchedule < PullWidget
       rt: 1,
       start: "yes"
     })
-    log "Getting data from %s" % uri.to_s
+    logger.info "Getting data from %s" % uri.to_s
     doc = Nokogiri::HTML(open(uri), nil, @source_charset)
     doc.encoding = "UTF-8"
     doc

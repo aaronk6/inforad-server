@@ -1,8 +1,8 @@
-require_relative 'pull_widget'
+require_relative '../classes/pull_widget'
 
 class RainForecast < PullWidget
 
-  def initialize(app_config)
+  def initialize(*args)
     super
 
     @endpoint = 'http://www.wetteronline.de/'

@@ -1,5 +1,10 @@
 config.yml
 
+.bundle
+vendor/cache
+
+*.sublime-workspace
+
 .DS_Store
 .AppleDouble
 .LSOverride

@@ -1,15 +1,14 @@
-require_relative 'pull_widget'
+require_relative '../classes/pull_widget'
 
 class Weather < PullWidget
 
   DEFAULT_LANG = 'EN'
 
-  def initialize(app_config)
+  def initialize(*args)
     super
 
     @endpoint = 'http://api.wunderground.com/api'
     @update_interval = 300
-
     @config["lang"] = DEFAULT_LANG if not @config["lang"]
   end
 
@@ -36,7 +35,7 @@ class Weather < PullWidget
 
   def queryAPI(route)
     uri = URI.parse("%s/%s/%s.json" % [ @endpoint, @config["api_key"], route ])
-    log "Getting data from %s" % uri.to_s
+    logger.info "Getting data from %s" % uri.to_s
     open(uri).read
   end
 
