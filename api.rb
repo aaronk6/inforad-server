@@ -61,7 +61,8 @@ post '/widgets/*' do
     return ''
   end
 
-  Object.const_get(name.camelize).new({}, store).update(request.body.read)
+  info = request.body.read.force_encoding("UTF-8")
+  Object.const_get(name.camelize).new({}, store).update(info)
 
   status 204
   ''
