@@ -22,7 +22,7 @@ class PullWidget < Widget
           logger.warn "Update failed: %s" % e.message
         end
 
-        @store.set("widget_%s" % name, add_last_update_timestamp(data).to_json)
+        publish(data)
         sleep @update_interval
       end
     end

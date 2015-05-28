@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'redis'
+gem 'em-hiredis'
 gem 'sinatra'
-gem 'sinatra-cross_origin'
+gem 'faye-websocket'
 gem 'nokogiri'
 gem 'activesupport'

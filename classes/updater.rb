@@ -19,8 +19,6 @@ class Updater
     # write list of enabled widgets to store
     @store.set("enabled_widgets", @widgets.keys.to_json)
 
-    puts "store: %s" % @store.inspect
-
     begin
       sleep
     rescue Interrupt

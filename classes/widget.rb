@@ -23,4 +23,14 @@ class Widget
     data
   end
 
+  def publish(data)
+    payload = { widget: {
+        name: name,
+        data: add_last_update_timestamp(data)
+      } }.to_json
+
+    @store.set("widget_%s" % name, payload)
+    @store.publish(:updates, payload)
+  end
+
 end

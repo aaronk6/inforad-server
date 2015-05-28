@@ -4,6 +4,7 @@ class BitcoinPrice < PullWidget
 
   def initialize(*args)
     super
+    @update_interval = 10
     @endpoint = 'https://api.coindesk.com/v1/bpi/currentprice/eur.json'
   end
 
