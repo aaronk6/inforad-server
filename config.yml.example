@@ -1,14 +1,16 @@
 enabled:
-  - db_scraper
+  - bitcoin_price
+  - tram_schedule
   - weather
   - rain_forecast
+  - currently_playing
 
 widget_config:
 
-  db_scraper:
+  tram_schedule:
     station: 1
     max_results: 10
-    remove_train_prefix: "STR "
+    remove_train_prefix: STR
 
   weather:
     api_key: YOUR_WEATHER_UNDERGROUND_API_KEY
@@ -18,3 +20,9 @@ widget_config:
 
   rain_forecast:
     federal_state: BER
+
+  currently_playing:
+    calendar:
+      url: https://example.com/calendars/users/nyancat/calendar/
+      username: nyancat
+      password: tacnayn!!1
