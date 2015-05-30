@@ -55,6 +55,7 @@ class Updater
       if @config["widget_config"] && @config["widget_config"][name]
         widget_config = @config["widget_config"][name]
       end
+      widget_config["watch"] = true
       @widgets[name] = Object.const_get(name.camelize).new(widget_config, @store)
     end
     true

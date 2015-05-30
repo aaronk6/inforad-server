@@ -32,7 +32,11 @@ post '/widgets/*' do
   end
 
   store = Redis.new
-  enabled = JSON.parse(store.get("enabled_widgets")) rescue enabled = []
+  begin
+    enabled = JSON.parse(store.get("enabled_widgets"))
+  rescue
+    enabled = []
+  end
 
   unless enabled.include? name
     status 404
@@ -40,6 +44,8 @@ post '/widgets/*' do
   end
 
   info = request.body.read.force_encoding("UTF-8")
+
+  # TODO: Load config
   Object.const_get(name.camelize).new({}, store).update(info)
 
   status 204

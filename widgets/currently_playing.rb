@@ -19,37 +19,39 @@ class CurrentlyPlaying < PushWidget
 
   ICAL_DAY_TIME_FORMAT = "%Y%m%dT000000Z"
 
-  def initialize(*args)
+  def initialize(config, store)
     super
 
     @endpoint = nil
     @update_interval = 10
 
-    @data = {
-      info: nil,
-      calendar: nil
-    }
+    # FIXME: Need a reliable way to figure out if we're currently receiving a push
+    # or should do a pull
+    if @config && @config["calendar"]
 
-    Thread.new do
-      loop do
-        logger.info 'Updating... (next update in %s seconds)' % [ @update_interval ]
+      Thread.new do
+        loop do
+          load_data_from_cache
+          logger.info 'Updating... (next update in %s seconds)' % [ @update_interval ]
 
-        events = get_events_in_range(Time.now - 1.day, Time.now.utc + 1.day)
+          events = get_events_in_range(Time.now - 1.day, Time.now.utc + 1.day)
 
-        if current_event = events.detect {|e| event_has_begun? e}
-          @data["calendar"] = "%s (%s - %s)" % [
-            current_event ? current_event.summary : nil,
-            Time.parse(current_event.dtstart.to_s).strftime('%H:%M'),
-            Time.parse(current_event.dtend.to_s).strftime('%H:%M')
-          ]
-        else
-          @data["calendar"] = nil
+          if current_event = events.detect {|e| event_has_begun? e}
+            @data["calendar"] = "%s (%s - %s)" % [
+              current_event ? current_event.summary : nil,
+              Time.parse(current_event.dtstart.to_s).strftime('%H:%M'),
+              Time.parse(current_event.dtend.to_s).strftime('%H:%M')
+            ]
+          else
+            @data["calendar"] = nil
+          end
+
+          publish(@data)
+
+          sleep @update_interval
         end
-
-        publish(@data)
-
-        sleep @update_interval
       end
+
     end
 
   end
@@ -129,7 +131,6 @@ class CurrentlyPlaying < PushWidget
   end
 
   def update(info)
-
     @data["info"] = info.empty? ? nil : info
     publish(@data)
   end

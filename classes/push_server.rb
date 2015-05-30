@@ -44,7 +44,11 @@ class PushServer
 
     # get list of enabled widgets
     store.get("enabled_widgets") do |value|
-      enabled = JSON.parse(value) rescue enabled = []
+      begin
+        enabled = JSON.parse(value)
+      rescue
+        enabled = []
+      end
       logger.debug "Bootstrapping widgets: %s" % [ enabled.join(', ') ]
 
       # get cached data for each widget and push to client
