@@ -4,6 +4,7 @@ enabled:
   - weather
   - rain_forecast
   - currently_playing
+  - giphy_trending
 
 widget_config:
 
@@ -26,3 +27,6 @@ widget_config:
       url: https://example.com/calendars/users/nyancat/calendar/
       username: nyancat
       password: tacnayn!!1
+
+  giphy_trending:
+    api_key: dc6zaTOxFJmzC # Giphy's public test key
