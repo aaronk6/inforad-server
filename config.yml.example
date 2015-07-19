@@ -30,3 +30,4 @@ widget_config:
 
   giphy_trending:
     api_key: dc6zaTOxFJmzC # Giphy's public test key
+    format: webp # supported: gif, mp4, webp
